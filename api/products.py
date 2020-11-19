@@ -22,7 +22,9 @@ class ProductsApi(Resource):
         :return: JSON object
         """
         output = Products.objects()
-        return jsonify({"result": output})
+        response = jsonify({"result": output})
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
 
     @jwt_required
     def post(self) -> Response:
@@ -38,7 +40,9 @@ class ProductsApi(Resource):
             data = request.get_json()
             post_user = Products(**data).save()
             output = {"id": str(post_user.id)}
-            return jsonify({"result": output})
+            response = jsonify({"result": output})
+            response.headers.add('Access-Control-Allow-Origin', '*')
+            return response
         else:
             return forbidden()
 
@@ -55,7 +59,9 @@ class ProductApi(Resource):
         :return: JSON object
         """
         output = Products.objects.get(id=product_id)
-        return jsonify({"result": output})
+        response = jsonify({"result": output})
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
 
     @jwt_required
     def put(self, product_id: str) -> Response:
@@ -67,7 +73,9 @@ class ProductApi(Resource):
         """
         data = request.get_json()
         put_user = Products.objects(id=product_id).update(**data)
-        return jsonify({"result": put_user})
+        response = jsonify({"result": put_user})
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
 
     @jwt_required
     def delete(self, user_id: str) -> Response:
@@ -81,6 +89,8 @@ class ProductApi(Resource):
 
         if authorized:
             output = Products.objects(id=user_id).delete()
-            return jsonify({"result": output})
+            response = jsonify({"result": output})
+            response.headers.add('Access-Control-Allow-Origin', '*')
+            return response
         else:
             return forbidden()

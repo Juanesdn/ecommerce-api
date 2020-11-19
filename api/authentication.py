@@ -26,7 +26,9 @@ class SignUpApi(Resource):
         post_user = Users(**data)
         post_user.save()
         output = {"id": str(post_user.id)}
-        return jsonify({"result": output})
+        response = jsonify({"result": output})
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
 
 
 class LoginApi(Resource):
@@ -51,7 +53,7 @@ class LoginApi(Resource):
                 identity=str(user.id), expires_delta=expiry
             )
             refresh_token = create_refresh_token(identity=str(user.id))
-            return jsonify(
+            response = jsonify(
                 {
                     "result": {
                         "access_token": access_token,
@@ -60,4 +62,6 @@ class LoginApi(Resource):
                     }
                 }
             )
+            response.headers.add('Access-Control-Allow-Origin', '*')
+            return response
 

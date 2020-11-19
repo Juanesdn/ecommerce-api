@@ -22,6 +22,7 @@ default_config = {
         "authentication_source": "admin",
     },
     "JWT_SECRET_KEY": "changeThisKeyFirst",
+    "CORS_HEADERS": "Content-Type"
 }
 
 
