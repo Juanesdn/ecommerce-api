@@ -13,7 +13,7 @@ from random import randint
 
 
 @mongo
-def csv_to_meal(filepath: str = 'resources/meal_data.csv', delimiter: str = '\t'):
+def csv_to_product(filepath: str = 'resources/product_data.csv', delimiter: str = '\t'):
     """
     Converts data in csv file to documents in meal collection.
     Uses @mongo wrapper to connect via mongoengine during execution.
@@ -25,8 +25,8 @@ def csv_to_meal(filepath: str = 'resources/meal_data.csv', delimiter: str = '\t'
         data = csv.DictReader(file, delimiter=delimiter)
 
         for datum in data:
-            dish = Meals(**datum, __auto_convert=True).save()
-            print(f"Added: {dish.name} | {dish.description} | {dish.price} => {dish.id}")
+            dish = Products(**datum, __auto_convert=True).save()
+            print(f"Added: {dish.name} | {dish.category} | {dish.description} | {dish.price} => {dish.id}")
 
 
 @mongo
@@ -68,5 +68,5 @@ def load_all(config: dict = None):
     if config:
         default_config.update(config)
 
-    csv_to_meal()
+    csv_to_product()
     generate_test_users()

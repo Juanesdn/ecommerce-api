@@ -45,7 +45,8 @@ class Users(Document):
     password = StringField(required=True, min_length=6, regex=None)
     access = EmbeddedDocumentField(Access, default=Access(user=True, admin=False))
     products = ListField(ReferenceField(Products))
-    name = StringField(unique=False)
+    first_name = StringField(unique=False)
+    last_name = StringField(unique=False)
 
     def generate_pw_hash(self):
         self.password = generate_password_hash(password=self.password).decode("utf-8")
